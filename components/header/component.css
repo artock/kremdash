@@ -1,0 +1,83 @@
+ .background-logo {
+     background-image: url('assets/images/header-main-icon.png');
+     background-repeat: no-repeat;
+     background-size: 18%;
+     background-position: 50% -10px;
+     padding: 10px 0px;
+     min-height: 135px;
+ }
+
+ #img1 {
+     display: block;
+     margin: 0 auto;
+     margin-top: 10px;
+ }
+
+ .header-icons-group {
+     display: flex;
+     justify-content: center;
+     color: #fff;
+     margin-top: 50px;
+ }
+
+ @media screen and (min-width: 300px) and (max-width: 768px) {
+
+     .header-icons-group {
+         display: none;
+     }
+     .background-logo {
+         background-image: url('assets/images/header-main-icon.png');
+         background-repeat: no-repeat;
+         background-size: 60%;
+         background-position: 50% -10px;
+     }
+     #img1 {
+         margin-top: 45px;
+     }
+ }
+
+ @media screen and (min-width: 1800px) {
+     .background-logo {
+         background-image: url('assets/images/header-main-icon.png');
+         background-repeat: no-repeat;
+         background-size: 15%;
+         background-position: 50% -10px;
+         padding: 10px 0px;
+         min-height: 135px;
+     }
+  
+ }
+
+ @media screen and (min-width: 400px) and (max-width: 600px) {
+     .background-logo {
+         background-image: url('assets/images/header-main-icon.png');
+         background-repeat: no-repeat;
+         background-size: 40%;
+         background-position: 50% -10px;
+         padding: 10px 0px;
+         min-height: 135px;
+     }
+     .header-icons-group {
+         display: none;
+     }
+ }
+
+ @media screen and (min-width: 600px) and (max-width: 800px) {
+     .background-logo {
+         background-image: url('assets/images/header-main-icon.png');
+         background-repeat: no-repeat;
+         background-size: 25%;
+         background-position: 50% -10px;
+         padding: 10px 0px;
+         min-height: 135px;
+     }
+     .header-icons-group {
+         display: none;
+     }
+ }
+
+ @media screen and (min-width: 600px) and (max-width: 1000px) {
+     .header-icons-group {
+         display: none;
+     }
+ }

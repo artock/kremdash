@@ -1,0 +1,36 @@
+.panel-name {
+    min-height: 60px;
+    color: #436882;
+    font-size: 30px;
+    line-height: 60px;
+    padding: 10px;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.panel-type {
+    text-align: center;
+    min-height: 60px;
+    line-height: 60px;
+    color: #436882;
+    font-size: 22px;
+    transition: all 0.3s;
+    font-weight: 300;
+    text-transform: uppercase;
+    width: 33.3%;
+    border:none!important;
+}
+
+.nav.nav-tabs {
+    border:none!important;
+}
+
+
+@media screen and (min-width: 300px) and (max-width: 768px) {
+
+    .panel-type {
+        width: 100%;
+    }
+}

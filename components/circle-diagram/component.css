@@ -1,0 +1,28 @@
+#circle-diagram {
+    display: inline-block;
+}
+
+.circle-diagram-col {
+	min-height: 300px;
+}
+
+.circle-diagram-col:hover {
+	background-color: #F5F5F5;
+}
+
+.circle-diagram-col a {
+	text-decoration: none !important;
+	color: #333 !important;
+}
+
+.circle-diagram-col p {
+	font-weight: 700;
+	color: #333 !important;
+}
+
+.circle-diagram-title {
+	text-align: center;
+	font-size: 0.85em;
+	margin-top: -20px;
+	margin-bottom: 0px;
+}

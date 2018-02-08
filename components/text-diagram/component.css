@@ -1,0 +1,32 @@
+.widget {
+	padding: 20px;
+}
+
+.widget-title {
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.widget-number {
+	font-size: 40px;
+
+}
+
+.text-diagram-col {
+	padding: 30px 0px 0px 0px;
+	min-height: 300px;
+}
+
+.text-diagram-col a {
+	text-decoration: none !important;
+	color: #333 !important;
+}
+
+.text-diagram-col a:focus, a:hover {
+	color: #333333;
+   
+}
+
+.widget:hover {
+	background-color: #F5F5F5;
+}

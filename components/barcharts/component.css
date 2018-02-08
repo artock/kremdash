@@ -1,0 +1,10 @@
+.heading-border {
+		width: 98%;
+		padding-bottom: 5px;
+		border-bottom: 6px solid #417FC4;
+		font-weight: 600;
+	}
+
+	.info {
+		padding-top: 20px;
+	}

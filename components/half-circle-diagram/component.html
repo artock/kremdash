@@ -1,0 +1,133 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<a href="index.php?view={ctg}&id={id}">
+<div class="col-xs-12 " style="padding: 0px 50px">
+    <div class="row ">
+        <h3 class="heading-border">{title}</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div id="chart" class="chart-container">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <p class="info">
+                <p>Індекс якості життя — це комплексний показник, який відображає рівень задоволеності міським середовищем (оцінка стану міської інфраструктури, якості послуг, які надаються у різних сферах, і умов для життя, створених у місті) та особистим комфортом мешканців у місті.</p>
+                <p>
+                    Кожен показник демонструє середній рівень задоволеності, який вимірюється шкалою від 1 до 5.</p>
+                <p>
+                    1 — зовсім незадоволений / на</p>
+                <p>
+                    2 — радше незадоволений / на
+                </p>
+                <p>3 — задоволений / на та незадоволений/на однаковою мірою
+                </p>
+                <p>4 — радше задоволений / на</p>
+                <p>
+                    5 — цілком задоволений / на
+                </p>
+                <p>Показники якості життя (як загальний, так і по сферах), сформовані на основі результатів опитування мешканців Львова, яке було проведено Інститутом міста та Соціологічною агенцією "Фама" у 2013 (в рамках проекту "Мистецтво врядування"; опитано 2400 осіб) та 2016 роках (в рамках проекту “Громади в дії”; опитано 1200 осіб).&nbsp;</p>
+            </p>
+        </div>
+    </div>
+</div>
+</a>
+<script>
+var value = Math.ceil(
+    ({dat}) * 100) / 100;
+
+if (value > 5) {
+    value = 5;
+}
+if (value < 0) {
+    value = 0;
+}
+
+var pie = d3.layout.pie().value(function(d) {
+    return d
+}).sort(null);
+var w = 300,
+    h = 300;
+var outerRadius = (w / 2.5) - 10;
+var innerRadius = 85;
+var color = ['#CCCCCC', '#3498DB', '#888888'];
+var colorOld = '#F00';
+var colorNew = '#0F0';
+var arc = d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius).startAngle(0).endAngle(Math.PI);
+var arcLine = d3.svg.arc().innerRadius(innerRadius).outerRadius(outerRadius).startAngle(0);
+var svg = d3.select("#chart").append("svg").attr({
+    width: w,
+    height: h,
+    class: 'shadow'
+}).append('g').attr({
+    transform: 'translate(' + w / 2 + ',' + h / 2 + ')'
+});
+var path = svg.append('path').attr({
+    d: arc,
+    transform: 'rotate(-90)'
+}).attr({
+    'stroke-width': "1",
+    stroke: "#CCCCCC"
+}).style({
+    fill: color[0]
+});
+var pathForeground = svg.append('path').datum({
+    endAngle: 0
+}).attr({
+    d: arcLine,
+    transform: 'rotate(-90)'
+}).style({
+    fill: function(d, i) {
+        return color[1];
+    }
+});
+var middleCount = svg.append('text').datum(0).text(function(d) {
+    return d;
+}).attr({
+    class: 'middleText',
+    'text-anchor': 'middle',
+    dy: 0,
+    dx: 0
+}).style({
+    fill: d3.rgb('#BABABA'),
+    'font-size': '35px'
+});
+
+var middleCount1 = svg.append('text').datum(5).text(function(d) {
+    return d;
+}).attr({
+    class: 'middleText1',
+    'text-anchor': 'middle',
+    dy: 30,
+    dx: 98
+}).style({
+    fill: d3.rgb('#BABABA'),
+    'font-size': '20px'
+});
+
+var middleCount1 = svg.append('text').datum(1).text(function(d) {
+    return d;
+}).attr({
+    class: 'middleText1',
+    'text-anchor': 'middle',
+    dy: 30,
+    dx: -98
+}).style({
+    fill: d3.rgb('#BABABA'),
+    'font-size': '20px'
+});
+
+var oldValue = 0;
+var arcTween = function(transition, newValue, oldValue) {
+    transition.attrTween("d", function(d) {
+        var interpolate = d3.interpolate(d.endAngle, (
+            (Math.PI)) * (newValue / 5));
+        var interpolateCount = d3.interpolate(oldValue, newValue);
+        return function(t) {
+            d.endAngle = interpolate(t);
+            middleCount.text(Math.ceil(interpolateCount(t) * 100) / 100);
+            return arcLine(d);
+        };
+    });
+};
+pathForeground.transition().duration(750).ease('cubic').call(arcTween, value, oldValue);
+</script>

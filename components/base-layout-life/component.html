@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.php">
+    <link rel="stylesheet" href="">
+    <link rel="stylesheet" href="../../core/jquery_circleful/jquery.circliful.css" crossorigin="anonymous">
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="../../core/jquery_circleful/jquery.circliful.min.js" crossorigin="anonymous"></script>
+    <title>Base layout</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/animation/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-xs-12 sidebar">
+                <?php
+                    render_component("sidebar-life", []);
+                ?>
+            </div>
+
+            <div class="col-md-10 col-md-offset-2 col-xs-12" >
+             <?php
+                render_component("panels-name",[]);
+              ?>
+              <div class="row">
+                    <?php
+
+                    if (isset($_GET['id'])) {
+                      $linecharts = R::find('diagrams', 'id LIKE ?', [$_GET['id']]);
+
+                      foreach ($linecharts as $key) {
+                          $line_period = (json_decode($key['line_period'], true));
+                          $line_data = (json_decode($key['line_diag_dat'], true));
+                          $comb = array();
+                          foreach ($line_data as $k => $value) {
+                              $comb[] = array('year'=> $line_period[$k], 'value'=>$value);
+                          }
+                          $comb = json_encode($comb);
+                          render_component("linecharts", ['data' => $comb, 'title' => $key['diag_title']]);
+                    }
+                    }else {
+                        $percents = R::getAll('SELECT * FROM diagrams LIMIT 0,3');
+                            foreach ($percents as $key) {
+                                if ($_GET['view'] == $key['diag_ctg']) {
+                                    render_component("half-circle-diagram",['id' => $key['id'], 'title' => $key['diag_title'], 'ctg' => $key['diag_ctg'], 'dat' => $key['diag_dat']]);
+                                }
+                            }
+                        }   
+                        
+                    ?>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- jQuery CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Bootstrap Js CDN -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- jQuery Custom Scroller CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#custom-scrollbar").mCustomScrollbar({
+            theme: "minimal"
+        });
+
+        // $('#sidebarCollapse').on('click', function () {
+        //     $('#sidebar, #content').toggleClass('active');
+        //     $('.collapse.in').toggleClass('in');
+        //     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+        // });
+
+        $('#sidebar li').click(function(e) {
+            $('#sidebar li').removeClass('active');
+            $(e.currentTarget).addClass('active');
+        });
+
+
+    });
+    </script>
+</body>
+
+</html>
